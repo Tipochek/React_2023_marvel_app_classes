@@ -19,9 +19,9 @@ class App extends React.Component {
         super();
         this.state = {
             showModal: false,
-            lastID: data.length,
+            lastID: data?.length || 0,
             editedCard: null,
-            cardsLists: data
+            cardsLists: data || []
         }
     }
 
@@ -54,8 +54,11 @@ class App extends React.Component {
     }
 
     deleteCard = (index) => {
-        console.log('Remove card', index)
-        this.setState(() => ({cardsLists: this.state.cardsLists.filter(elem => (elem.id !== index))}))
+        console.log('Delete card', index)
+
+        this.setState(() => ({
+            cardsLists: this.state.cardsLists.filter(elem => (elem.id !== index))
+        }))
     }
 
     render() {
