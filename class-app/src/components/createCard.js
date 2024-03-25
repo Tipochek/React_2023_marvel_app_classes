@@ -1,12 +1,13 @@
 import React from 'react';
 
 class CreateCard extends React.Component {
-    constructor(){
+    constructor(props){
         super();
         this.state = {
-            title: '',
-            description: '',
-            id: ''
+            title: props.editedCard?.title || '',
+            description: props.editedCard?.description || '',
+            id: props.editedCard?.id || '',
+            editFlag: props.editedCard ? !!Object.keys(props.editedCard).length : false
         }
     }
 
@@ -19,21 +20,29 @@ class CreateCard extends React.Component {
             this.setState({description: e.target.value})
         }
 
-        this.setState({id: this.props.lastID + 1})
+        if (!this.state.editFlag) this.setState(() => ({id: this.props.lastID + 1}))
     }
 
-    addCard = () => {
-        const {title, description} = this.state
+    onAccept = () => {
+        const {title, description, id, editFlag} = this.state
 
         if (title !== '' && description !== '') {
-            this.props.onConfirm(this.state)
-            this.props.changeLastID()
+            if (editFlag) {
+                this.props.createCard(this.state, true)
+            } else {
+                this.props.createCard(this.state)
+                this.props.changeLastID(id)
+            }
+        } else {
+            // show error message
         }
 
         this.props.switchModal(false)
     }
 
     render() {
+        const {title, description, editFlag} = this.state;
+
         return (
             <>
                 <div className="row">
@@ -43,6 +52,7 @@ class CreateCard extends React.Component {
                         id="card-title"
                         type="text"
                         placeholder="Enter card Title"
+                        value={title}
                         name='title'
                         onChange={this.onInputChangeHandler}
                     />
@@ -56,13 +66,14 @@ class CreateCard extends React.Component {
                         type="text"
                         placeholder="Enter card Description"
                         maxLength={200}
+                        value={description}
                         name='description'
                         onChange={this.onInputChangeHandler}
                     />
                 </div>
 
                 <div className="btn-holder">
-                    <button className="add" onClick={this.addCard}>add</button>
+                    <button className="add" onClick={this.onAccept}>{editFlag ? 'save' : 'add'}</button>
                     <button className="cancel" onClick={() => this.props.switchModal(false)}>cancel</button>
                 </div>
             </>
