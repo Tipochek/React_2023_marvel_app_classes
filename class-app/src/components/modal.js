@@ -3,7 +3,8 @@ import React from "react";
 class Modal extends React.Component {
 
     closeModal = () => {
-        this.props.switchModal(false);
+        this.props.switchModal(false)
+        this.props.editCard(null)
     }
 
     render() {
