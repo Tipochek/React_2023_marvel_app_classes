@@ -3,16 +3,39 @@ import React from "react";
 import Card from "./components/card";
 import Modal from "./components/modal";
 import CreateCard from "./components/createCard";
+import FindCard from "./components/findCard";
 
 import './all.css'
 
 const data = [
-        {id: 1, title: '1', description: '111'},
-        {id: 2, title: '2', description: '222'},
-        {id: 3, title: '3', description: '333'},
-        {id: 4, title: '4', description: '444'},
-        {id: 5, title: '5', description: '555'},
-    ];
+    {id: 1, title: '1', description: '111'},
+    {id: 2, title: '2', description: '222'},
+    {id: 3, title: '3', description: '333'},
+    {id: 4, title: '4', description: '444'},
+    {id: 5, title: '5', description: '555'},
+];
+
+// const apiKey = '24b497fd0cbed1ff9ffecb92469e2cec';
+// const url = `https://gateway.marvel.com:443/v1/public/comics?apikey=${apiKey}`;
+
+// function getData(url){
+//     fetch(url)
+//     .then(response => response.json())
+//     .then(data => console.log(data.data.results))
+// }
+
+// async function getData(url) {
+//     const response = await fetch(url);
+//     let json;
+
+//     response.ok
+//     ? json = await response.json()
+//     : console.log(`Can't reach ${url}, status: ${response.status}`)
+
+//     console.log(json.data.results);
+//     return json.data.results;
+// }
+// getData(url);
 
 class App extends React.Component {
     constructor(){
@@ -61,11 +84,23 @@ class App extends React.Component {
         }))
     }
 
+    findCard = (title) => {
+        const titleStr = title.toString();
+        console.log('Find card', titleStr)
+
+        this.setState(() => ({
+            cardsLists: this.state.cardsLists.filter(elem => (elem.title === titleStr))
+        }))
+    }
+
     render() {
         return (
             <>
                 <main className="main">
-                    <button className="create" onClick={() => this.switchModal(true)}>+</button>
+                    <div className="holder">
+                        <button className="create" onClick={() => this.switchModal(true)}>+</button>
+                        <FindCard findCard={this.findCard}/>
+                    </div>
 
                     <div className="card-holder">
                         {this.state.cardsLists.map((card) => (
