@@ -1,48 +1,49 @@
 import { useState } from 'react';
-import Field from './components/field'
-import Move from './components/move';
+import Field from '../components/gameField/gameField';
+import Move from '../components/gameMove/gameMove';
 
-const App = () => {
+const Game = () => {
     const [gameStart, setGameStart] = useState(false);
-    const [qty, setQty] = useState(0);
-    const [currPosition, setCurrPosition] = useState();
-    const [diceRoll, makeDiceRoll] = useState();
+    const [stepQuantity, setStepQuantity] = useState(0);
+    const [currentPosition, setCurrentPosition] = useState();
+    const [diceRoll, setDiceRoll] = useState();
     const [rollsHistory, setRollsHistory] = useState([]);
     const [movesHistory, setMovesHistory] = useState([]);
 
-    const  firstSixIndex = rollsHistory.indexOf(6);
+    const firstSixIndex = rollsHistory.indexOf(6);
+
     return (
         <>
             <header>
-                {gameStart ? <h3>Current position: {currPosition}</h3> : "Game hasn't started yet, roll 6 !"}
+                {gameStart ? <h3>Current position: {currentPosition}</h3> : "Game hasn't started yet, roll 6 !"}
                 <br />
                 <Move
                     gameStart={gameStart}
                     setGameStart={setGameStart}
-                    qty={qty}
-                    setQty={setQty}
-                    currPos={currPosition}
-                    setPos={setCurrPosition}
+                    qty={stepQuantity}
+                    setQty={setStepQuantity}
+                    currPos={currentPosition}
+                    setPos={setCurrentPosition}
                     dice={diceRoll}
-                    diceRoll={makeDiceRoll}
+                    diceRoll={setDiceRoll}
                     rollsHistoryState={rollsHistory}
                     rollsHistoryUpdate={setRollsHistory}
                     movesHistory={movesHistory}
                     setMovesHistory={setMovesHistory}
                 />
                 <hr />
-                <h3>General quantity of rolls: {qty}</h3>
+                <h3>General quantity of rolls: {stepQuantity}</h3>
                 <h3>Quantity of rolls before game starts: {firstSixIndex > -1 ? firstSixIndex + 1 : null }</h3>
                 <h3>Rolls history: {rollsHistory.toString()}</h3>
             </header>
 
             <main>
                 <Field
-                    currPos={currPosition}
+                    currentPosition={currentPosition}
                 />
             </main>
         </>
     )
 }
 
-export default App;
+export default Game;
