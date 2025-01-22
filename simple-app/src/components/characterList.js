@@ -1,18 +1,14 @@
-import InfoBlock from "./infoBlock";
+import InfoBlock from './infoBlock';
 
 const renderItems = (data) =>
-    data.map(el =>
+    data.map((el) => (
         <li key={el.id}>
-            <InfoBlock data={el}/>
+            <InfoBlock data={el} />
         </li>
-    );
+    ));
 
-function CharacterList({data}) {
-    return (
-        <ul>
-            {data ? renderItems(data) : 'No data'}
-        </ul>
-    );
+function CharacterList({ data }) {
+    return <ul>{data ? renderItems(data) : 'No data'}</ul>;
 }
 
 export default CharacterList;

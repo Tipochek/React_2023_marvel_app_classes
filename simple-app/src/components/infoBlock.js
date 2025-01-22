@@ -7,7 +7,7 @@ function InfoBlock (props) {
                 width={60}
                 height={60}
                 src={thumbnail ? `${thumbnail.path}.${thumbnail.extension}` : ''}
-                alt="some picture" />
+                alt="some text" />
             <h2>{name ? name : 'No Name'}</h2>
             <strong>{id ? id : 'No ID'}</strong>
             <p>{description ? description : 'No Description'}</p>

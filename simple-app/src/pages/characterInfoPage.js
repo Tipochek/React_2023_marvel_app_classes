@@ -1,17 +1,17 @@
-import { useState, useContext } from "react";
-import MarvelService from "../services/service";
-import CharacterList from "../components/characterList";
-import MarvelDataContext from "../components/MarvelDataContext";
+import { useState, useContext } from 'react';
+import MarvelService from '../services/service';
+import CharacterList from '../components/characterList';
+import MarvelDataContext from '../components/MarvelDataContext';
 
-function CharactersInfoPage () {
+function CharactersInfoPage() {
     const [active, setActive] = useState(false);
-    const {marvelData, setMarvelData } = useContext(MarvelDataContext);
+    const { marvelData, setMarvelData } = useContext(MarvelDataContext);
 
-    function loadData () {
+    function loadData() {
         MarvelService().then((res) => {
             setActive(true);
             setMarvelData(res);
-        })
+        });
     }
 
     return (
@@ -21,7 +21,7 @@ function CharactersInfoPage () {
             <hr />
             <CharacterList data={marvelData} />
         </>
-    )
+    );
 }
 
 export default CharactersInfoPage;
